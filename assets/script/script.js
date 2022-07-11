@@ -29,11 +29,6 @@ $(".history").on('click', function(event){
     getResult(); 
 });
 
-
-
-
-// WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
 function getResult(){   
 
     $(".five-day").empty();
@@ -68,10 +63,10 @@ function getResult(){
     
     var geoUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + cityCode + "," + countryCode + "&limit=5&appid=7d1b285353ccacd5326159e04cfab063"
         
-    //We then pass the requestUrl variable as an argument to the fetch() method, like in the following code:    
+ 
       fetch(geoUrl)
     
-        //Convert the response into JSON. Lastly, we return the JSON-formatted response, as follows:
+
         .then(function (response) {
           return response.json();
         })
@@ -79,8 +74,7 @@ function getResult(){
         .then(function (data) {
           geoLon = data[0].lon;
           geoLat = data[0].lat;
-    
-          //use geoLat and geoLon to fetch the current weather
+
           var weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + geoLat + "&lon="+ geoLon + "&exclude=minutely,hourly,alerts&units=imperial&appid=7d1b285353ccacd5326159e04cfab063";
             
           fetch(weatherUrl)
@@ -89,14 +83,14 @@ function getResult(){
             return response.json();
           })
           .then(function (data) {
-            // console.log(data)
+       
             
             weatherIcon= data.current.weather[0].icon;
             imgSrc = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
             icon.attr('src',imgSrc)
         
             cityName.text(cityCode);
-            //translate utc to date
+          
             var date = new Date(data.current.dt * 1000);
             dateTime.text("("+ (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + ")");
 
@@ -104,8 +98,6 @@ function getResult(){
             humidity.text("Humidity: " + data.current.humidity + " %");
             wind.text("Wind Speed: " + data.current.wind_speed + " MPH");
 
-            // WHEN I view the UV index
-            // THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe    
             var uvi =$("<div>")
             uvIndex.text("UV Index: ");
             uvi.text(data.current.uvi)
@@ -124,9 +116,7 @@ function getResult(){
                 uvi.attr("style","background-color:purple; color:black; margin-left: 5px")
             }
 
-            // WHEN I view future weather conditions for that city
-            // THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
-            //using the data from previous fetch and display the 5 day weather data
+      
             for (var i=1;i<6;i++){
 
                 var miniCards = $("<div>")
@@ -135,7 +125,6 @@ function getResult(){
                 this["futureTemp"+i] = $("<div>")
                 this["futureWind"+i] = $("<div>")
                 this["futureHumidity"+i] = $("<div>")
-                //translate utc to date
                 this["forecastDay"+i] = new Date(data.daily[i].dt * 1000);     
      
                 (this["futureDate"+i]).text(((this["forecastDay"+i]).getMonth()+1) + "/" + (this["forecastDay"+i]).getDate() + "/" + (this["forecastDay"+i]).getFullYear());
@@ -161,10 +150,6 @@ function getResult(){
     })
 }
 
-// WHEN I click on a city in the search history
-// THEN I am again presented with current and future conditions for that city
-
-//get local storage info
 function getInfo() {
     var currentList =localStorage.getItem("city");
     if (currentList !== null ){
@@ -175,7 +160,7 @@ function getInfo() {
     }
     return freshList;
 }
-//add info to local
+
 function addInfo (n) {
     var savedCities = getInfo();
 
@@ -185,7 +170,7 @@ function addInfo (n) {
    
     localStorage.setItem("city", JSON.stringify(savedCities));
 };
-//render history
+
 function loadCities () {
     var searchedCities = getInfo();
     for (var i = 0; i < searchedCities.length; i++) {
