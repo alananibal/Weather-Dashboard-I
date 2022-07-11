@@ -1,10 +1,8 @@
-// Acceptance Criteria
-// GIVEN a weather dashboard with form inputs
 
-// WHEN I search for a city
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
-    
-//function that collect user input and display in search history
+document.getElementById("searchBtn").addEventListener("click", addResult);
+document.getElementById("searchBtn").addEventListener('click', getResult);
+
+
 function addResult(){
 
     inputCity = document.getElementById("myInput").value;  
@@ -23,7 +21,7 @@ function addResult(){
     
 }; 
 
-//add event listener to search history item
+
 $(".history").on('click', function(event){
     event.preventDefault();
     $(".subtitle").attr("style","display:column")
@@ -31,9 +29,8 @@ $(".history").on('click', function(event){
     getResult(); 
 });
 
-//add event listner to search button
-document.getElementById("searchBtn").addEventListener("click", addResult);
-document.getElementById("searchBtn").addEventListener('click', getResult);
+
+
 
 // WHEN I view current weather conditions for that city
 // THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
